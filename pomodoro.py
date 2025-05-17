@@ -21,21 +21,30 @@ class App(ctk.CTk):
     def loading_wdigets(self):
         image_tom = Image.open("tomato.png")
         play_pause_image=Image.open("play.png")
-        play_image=ctk.CTkImage(light_image=play_pause_image,dark_image=play_pause_image,size=(200,200))
+        pause_image=Image.open("pause-button.png")
+        self.pause_image_last=ctk.CTkImage(light_image=pause_image,dark_image=pause_image,size=(50,50))
+        self.play_image=ctk.CTkImage(light_image=play_pause_image,dark_image=play_pause_image,size=(50,50))
         tomato_image=ctk.CTkImage (light_image=image_tom,dark_image=image_tom,size=(400,400))
+
         image_label=ctk.CTkLabel(self,image=tomato_image,text="hello world")
-        timer_label=ctk.CTkLabel(self,text="timer here")
-        start_pause_button=ctk.CTkButton(self,image=play_image,fg_color="transparent",text="")
+        #timer_label=ctk.CTkLabel(self,text="timer here")
+        self.start_pause_button=ctk.CTkButton(self,image=self.play_image,fg_color="transparent",text="",height=20,width=20,corner_radius=0,border_width=0,hover_color="#1a1a1a",command=self.logic)
         counting_label=ctk.CTkLabel(self,text="Counting label rest here")
 
 
         image_label.grid(row=0,column=0)
-        timer_label.grid(row=1,column=0)
-        start_pause_button.grid(row=2,column=0)
+        #timer_label.grid(row=1,column=0)
+        self.start_pause_button.grid(row=2,column=0)
         counting_label.grid(row=3,column=0)
 
 
+    def logic(self):
+        if self.start_pause_button.cget("image")==self.play_image:
+            self.start_pause_button.configure(self,image=self.pause_image_last)
+        else:
+            self.start_pause_button.configure(self,image=self.play_image)
 
+        
 
 
 
