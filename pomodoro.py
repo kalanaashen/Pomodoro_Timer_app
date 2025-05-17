@@ -2,7 +2,7 @@ import customtkinter as ctk
 from typing import Tuple
 ctk.set_appearance_mode("Dark")
 from PIL import Image
-
+from  datetime import datetime
 
 
 class App(ctk.CTk):
@@ -26,23 +26,31 @@ class App(ctk.CTk):
         self.play_image=ctk.CTkImage(light_image=play_pause_image,dark_image=play_pause_image,size=(50,50))
         tomato_image=ctk.CTkImage (light_image=image_tom,dark_image=image_tom,size=(400,400))
 
-        image_label=ctk.CTkLabel(self,image=tomato_image,text="hello world")
+        self.image_label=ctk.CTkLabel(self,image=tomato_image,text="hello world")
         #timer_label=ctk.CTkLabel(self,text="timer here")
-        self.start_pause_button=ctk.CTkButton(self,image=self.play_image,fg_color="transparent",text="",height=20,width=20,corner_radius=0,border_width=0,hover_color="#1a1a1a",command=self.logic)
+        self.start_pause_button=ctk.CTkButton(self,image=self.play_image,fg_color="transparent",text="",height=20,width=20,corner_radius=0,border_width=0,hover_color="#1a1a1a",command=self.button_logic)
         counting_label=ctk.CTkLabel(self,text="Counting label rest here")
 
 
-        image_label.grid(row=0,column=0)
+        self.image_label.grid(row=0,column=0)
         #timer_label.grid(row=1,column=0)
         self.start_pause_button.grid(row=2,column=0)
         counting_label.grid(row=3,column=0)
 
 
-    def logic(self):
+    def button_logic(self):
         if self.start_pause_button.cget("image")==self.play_image:
             self.start_pause_button.configure(self,image=self.pause_image_last)
+
+            
+
+            self.image_label.configure(self,text="pakaya")
+
+
         else:
             self.start_pause_button.configure(self,image=self.play_image)
+
+
 
         
 
