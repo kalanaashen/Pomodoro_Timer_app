@@ -19,6 +19,7 @@ class App(ctk.CTk):
 
 
     def loading_wdigets(self):
+        
         image_tom = Image.open("tomato.png")
         play_pause_image=Image.open("play.png")
         pause_image=Image.open("pause-button.png")
@@ -46,19 +47,30 @@ class App(ctk.CTk):
         else:
             self.start_pause_button.configure(self,image=self.play_image)
     def sec_25(self):
-        self.seconds=10
+
+        self.seconds=10*2
         self.timer()
     def timer(self):
+
         if self.seconds>=0:
             self.rest_minutes=int(self.seconds/60)
             self.rest_seconds=self.seconds%60
-            if self.rest_minutes==0:
+            if self.rest_minutes==0 and self.seconds>=10:
                 self.image_label.configure(text=f"{self.rest_seconds}",font=("Arial",30, "bold"))
-            else:
-                self.image_label.configure(text=f"{self.rest_minutes}:{self.rest_seconds}",font=("Arial",30, "bold"))
+            elif self.seconds<10 and self.rest_minutes!=0:
+                self.image_label.configure(text=f"{self.rest_minutes}:0{self.rest_seconds}",font=("Arial",30, "bold"))
+            elif self.seconds<10 and self.rest_minutes==0:
+                self.image_label.configure(text=f"{self.rest_seconds}",font=("Arial",30, "bold"))
             self.seconds-=1
             self.after(1000,self.timer)
 
+
+
+
+
+    def sec_5(self):
+        self.seconds_break=5*60
+        self.timer()
 
 
 
