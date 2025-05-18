@@ -2,7 +2,7 @@ import customtkinter as ctk
 from typing import Tuple
 ctk.set_appearance_mode("Dark")
 from PIL import Image
-from  datetime import datetime
+
 
 
 class App(ctk.CTk):
@@ -41,18 +41,24 @@ class App(ctk.CTk):
     def button_logic(self):
         if self.start_pause_button.cget("image")==self.play_image:
             self.start_pause_button.configure(self,image=self.pause_image_last)
-
+            self.sec_25()
             
-
-            self.image_label.configure(self,text="pakaya")
-
-
         else:
             self.start_pause_button.configure(self,image=self.play_image)
+    def sec_25(self):
+        self.seconds=10
+        self.timer()
+    def timer(self):
+        if self.seconds>=0:
+            self.rest_minutes=int(self.seconds/60)
+            self.rest_seconds=self.seconds%60
+            if self.rest_minutes==0:
+                self.image_label.configure(text=f"{self.rest_seconds}",font=("Arial",30, "bold"))
+            else:
+                self.image_label.configure(text=f"{self.rest_minutes}:{self.rest_seconds}",font=("Arial",30, "bold"))
+            self.seconds-=1
+            self.after(1000,self.timer)
 
-
-
-        
 
 
 
