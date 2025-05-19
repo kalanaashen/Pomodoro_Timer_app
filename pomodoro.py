@@ -1,27 +1,32 @@
 import customtkinter as ctk
 from typing import Tuple
 from PIL import Image
-ctk.set_appearance_mode("Dark")
+ctk.set_appearance_mode("Light")
+
+
 
 class App(ctk.CTk):
     def __init__(self, fg_color: str | Tuple[str, str] | None = None, **kwargs):
         super().__init__(fg_color, **kwargs)
         self.title("Pomodoro Application")
-        self.geometry("400x550")
+        self.geometry("450x600")
         self.columnconfigure(0,weight=1)
+        self.rowconfigure(0,weight=1)
         self.columnconfigure(1,weight=1)
+        self.rowconfigure(1,weight=1)
         self.columnconfigure(2,weight=1)
+        self.rowconfigure(3,weight=1)
         self.columnconfigure(3,weight=1)
         self.loading_wdigets()
         self.is_working=True
-        self.array=[{"status":"Work","time":1*60},
-                    {"status":"Break","time":1*60},
-                    {"status":"Work","time":25*60},
+        self.array=[{"status":"Work","time":25*60},
                     {"status":"Break","time":5*60},
                     {"status":"Work","time":25*60},
                     {"status":"Break","time":5*60},
                     {"status":"Work","time":25*60},
-                    {"status":"Break","time":30*60}]
+                    {"status":"Break","time":5*60},
+                    {"status":"Work","time":25*60},
+                    {"status":"Long Break","time":30*60}]
         self.current_index=0
         self.count=1
         self.correct_sign_="✔️"
@@ -37,8 +42,8 @@ class App(ctk.CTk):
         tomato_image=ctk.CTkImage (light_image=image_tom,dark_image=image_tom,size=(400,400))
         self.correct_sign=ctk.CTkLabel(self,text="")
         self.image_label = ctk.CTkLabel(self, image=tomato_image, text="Press Play!", compound="center", font=("Arial", 30, "bold"), text_color="white")
-        self.start_pause_button=ctk.CTkButton(self,image=self.play_image,fg_color="transparent",text="",height=20,width=20,corner_radius=0,border_width=0,hover_color="#1a1a1a",command=self.button_logic)
-        self.work_break_label.grid(row=0,column=0)
+        self.start_pause_button=ctk.CTkButton(self,image=self.play_image,fg_color="transparent",text="",height=20,width=20,corner_radius=0,border_width=0,hover_color="white smoke",command=self.button_logic)
+        self.work_break_label.grid(row=0,column=0,sticky="s")
         self.image_label.grid(row=1,column=0)
         self.start_pause_button.grid(row=2,column=0)
         self.correct_sign.grid(row=3,column=0)
@@ -54,8 +59,8 @@ class App(ctk.CTk):
             
         else:
             self.start_pause_button.configure(image=self.play_image)
-            self.image_label.configure(text="00:00",font=("Arial",30, "bold"))
-            self.work_break_label.configure(text="You Failed All reseted!",font=("Arial",30, "bold"))
+            self.image_label.configure(text="00:00",font=("Arial",30,"bold"))
+            self.work_break_label.configure(text="You Failed All reseted!",font=("Helvetica",40,"bold"))
             self.is_working=False
     
 
@@ -72,8 +77,8 @@ class App(ctk.CTk):
                 rest_minutes = self.r_time // 60
                 rest_seconds = self.r_time % 60
                 time_display = f"{rest_minutes:02}:{rest_seconds:02}"
-                self.image_label.configure(text=time_display, font=("Arial", 30, "bold"))
-                self.work_break_label.configure(text=self.status,font=("Arial",30, "bold"))
+                self.image_label.configure(text=time_display, font=("Arial", 30,"bold"))
+                self.work_break_label.configure(text=self.status,font=("Helvetica",40,"bold"))
                 self.r_time -= 1
                 self.after(1000, self.inside_func)
         elif self.is_working and self.current_index < len(self.array):
