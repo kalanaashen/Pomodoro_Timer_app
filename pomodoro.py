@@ -15,7 +15,7 @@ class App(ctk.CTk):
         self.columnconfigure(2,weight=1)
         self.columnconfigure(3,weight=1)
         self.loading_wdigets()
-        
+        self.is_working=True
 
 
     def loading_wdigets(self):
@@ -50,28 +50,30 @@ class App(ctk.CTk):
             self.start_pause_button.configure(image=self.play_image)
             self.image_label.configure(text="00:00",font=("Arial",30, "bold"))
             self.work_break_label.configure(text="You Failed All reseted!",font=("Arial",30, "bold"))
-
+            self.is_working=False
     def sec_25(self):
 
+        self.is_working=True
         self.seconds=60
+        
         self.timer()
 
 
 
     def timer(self):
       
-        if self.seconds >= 0:
+        if self.seconds >= 0 and self.is_working :
             self.rest_minutes = self.seconds // 60
             self.rest_seconds = self.seconds % 60
-
-            # Format as MM:SS with leading zeroes
             time_display = f"{self.rest_minutes:02}:{self.rest_seconds:02}"
             self.image_label.configure(text=time_display, font=("Arial", 30, "bold"))
-
             self.seconds -= 1
             self.after(1000, self.timer)
-
-
+        if self.seconds==0:
+            self.seconds=2*60
+            self.is_working=True
+            self.timer()
+            self.work_break_label.configure(text="Break",font=("Arial",30, "bold"))
 
 
 
